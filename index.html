@@ -283,7 +283,7 @@
             var incident_icons = [];
             var incident_icon;
             var infoWindow;
-            var clickListener;
+            var img_ind;
 
             // Uve框架下实现数据联动
             vm = new Vue({
@@ -497,19 +497,19 @@
                         });
                         incident_icons.push(incident_icon);
                         map.add(incident_icons);
-
-                        // 只允许第192个风险事件展示gif
-                        if (tree_ind == "10") {
-                            incident_icon.on('click', this.drawImage);
-                        }
-                        //incident_icon.on('click', this.drawImage);
+                        img_ind = tree_ind;
+                        incident_icon.on('click', this.drawImage);
                     },
 
                     //在指定位置打开信息窗体
                     drawImage() {
                         //构建信息窗体中显示的内容
                         var info = [];
-                        info.push("<img src='Supports/data/r192.gif' width='300' height='300'>");
+                        var URL = 'Supports/data/' + img_ind + '.gif'
+                        console.log(URL)
+
+                        info.push("<img src= " + URL + " width='300' height='300'>");
+                        console.log("<img src= " + URL + " width='300' height='300'>")
 
                         var infoWindow = new AMap.InfoWindow({
                             anchor: 'bottom-left',
@@ -518,6 +518,7 @@
                             //size: new AMap.Size(400, 300),
                             content: info  //使用默认信息窗体框样式，显示信息内容
                         });
+
                         infoWindow.open(map, incident_icon.getPosition());
                     },
 
